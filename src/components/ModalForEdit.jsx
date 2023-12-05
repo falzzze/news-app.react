@@ -1,29 +1,27 @@
 import { useContext, useState } from "react";
+import { useParams } from "react-router-dom";
+
 import { Button, Form, Modal } from "react-bootstrap";
 import { AppContext } from "../App";
 
-function CustomModal() {
+function ModalForEdit() {
   const [show, setShow] = useState(false);
-  const {
-    handleNewArticleSubmit,
-    title,
-    setTitle,
-    description,
-    setDescription,
-  } = useContext(AppContext);
+  const { selectArticleForEdit, title, setTitle, description, setDescription } =
+    useContext(AppContext);
+  const { id } = useParams();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   return (
     <>
-      <Button className="mt-5 ms-3" variant="primary" onClick={handleShow}>
-        Add article
+      <Button className="me-3" variant="warning" onClick={handleShow}>
+        Edit this
       </Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Добавление статьи</Modal.Title>
+          <Modal.Title>Редактирование статьи</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -61,7 +59,7 @@ function CustomModal() {
           <Button
             variant="dark"
             onClick={() => {
-              handleNewArticleSubmit();
+              selectArticleForEdit(id);
               handleClose();
             }}
           >
@@ -73,4 +71,4 @@ function CustomModal() {
   );
 }
 
-export default CustomModal;
+export default ModalForEdit;

@@ -33,6 +33,7 @@ function App() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [news, setNews] = useState([]);
+  const [test, setTest] = useState(false);
 
   useEffect(() => {
     // if (category) {
@@ -53,7 +54,7 @@ function App() {
       .then((data) => setNews(data))
       .catch((err) => console.error(err));
     setLoading(false);
-  }, [category, search]);
+  }, [category, title, description, test]);
 
   const handleCategory = (category) => {
     setCategory(category);
@@ -66,11 +67,10 @@ function App() {
     setCategory(""); // работает с новостным API, не с MOCKAPI
   };
 
-  const handleNewArticleSubmit = (e) => {
-    e.preventDefault();
+  //добавляем статьи с автогенерацией картинки
+  const handleNewArticleSubmit = () => {
     const newArticle = { title, description };
-
-    axios //добавляем статьи с автогенерацией картинки
+    axios
       .post(API_URL3, newArticle)
       .then(() => {
         setDescription("");
@@ -79,11 +79,26 @@ function App() {
       .catch((err) => console.error(err));
   };
 
+  //удаляем статью
   const handleDeleteArticle = (id) => {
     axios
       .delete(API_URL3 + "/" + id)
-      .then((res) => console.log(res))
-      .then((err) => console.error(err));
+      .then(() => {
+        setTest(!test);
+      })
+      .catch((err) => console.error(err));
+  };
+
+  //редактируем статью
+  const selectArticleForEdit = (id) => {
+    const newArticle = { title, description };
+    axios
+      .put(API_URL3 + "/" + id, newArticle)
+      .then(() => {
+        setTitle("");
+        setDescription("");
+      })
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -102,6 +117,7 @@ function App() {
           handleSearch,
           handleNewArticleSubmit,
           handleDeleteArticle,
+          selectArticleForEdit,
         }}
       >
         <Header />
@@ -111,7 +127,7 @@ function App() {
           <Route path="/*" element={<NotFound />} />
           <Route path="/" element={<Auth />} />
           <Route path="/login" element={<Login />} />
-          <Route
+          <Route //запрещаем доступ не авторизованным пользователям
             path="/dashboard"
             element={
               <RequireAuth>
