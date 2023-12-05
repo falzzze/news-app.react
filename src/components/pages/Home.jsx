@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Nav, Row, Col, Container } from "react-bootstrap";
-import NewsList from "../NewsList";
 import { AppContext } from "../../App";
+import NewsList from "../NewsList";
 
 const Home = () => {
   const { handleCategory } = useContext(AppContext);

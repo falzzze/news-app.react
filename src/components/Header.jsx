@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
+
 import {
   Navbar,
   Nav,
@@ -23,49 +24,66 @@ const Header = () => {
         expand="lg light"
       >
         <Container>
-          <Navbar.Brand as={Link} to={"/"} className="text-light fs-4 me-5">
+          <Navbar.Brand as={Link} to={"/home"} className="text-light fs-4 me-5">
             News
+          </Navbar.Brand>
+          <Navbar.Brand
+            as={Link}
+            to={"/login"}
+            className="text-light fs-4 me-5"
+          >
+            Login
+          </Navbar.Brand>
+          <Navbar.Brand as={Link} to={"/"} className="text-light fs-4 me-5">
+            Auth
+          </Navbar.Brand>
+          <Navbar.Brand
+            as={Link}
+            to={"/dashboard"}
+            className="text-light fs-4 me-5"
+          >
+            Dashboard
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbar-nav" />
           <Navbar.Collapse id="navbar-nav">
-            <Nav className="me-auto">
-              <Dropdown>
-                <Dropdown.Toggle variant="outline-secondary">
-                  Categories
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => handleCategory("world")}>
-                    World
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleCategory("sports")}>
-                    Sports
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleCategory("business")}>
-                    Business
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleCategory("technology")}>
-                    Technology
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={() => handleCategory("entertainment")}
-                  >
-                    Entertainment
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </Nav>
-            {!location.pathname?.includes("/news") && ( // скрываем строку поиска при отображении одиночной страницы
-              <Form className="d-flex" onSubmit={handleSearch}>
-                <FormControl
-                  type="text"
-                  placeholder="Search"
-                  className="me-2"
-                  name="search"
-                />
-                <Button variant="outline-secondary" type="submit">
-                  Search
-                </Button>
-              </Form>
+            {!location.pathname?.includes("/login") && ( // скрываем строку поиска при отображении одиночной страницы
+              <>
+                <Nav className="me-auto">
+                  <Dropdown>
+                    <Dropdown.Toggle variant="outline-secondary">
+                      Categories
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item onClick={() => handleCategory(1)}>
+                        World
+                      </Dropdown.Item>
+                      <Dropdown.Item onClick={() => handleCategory(2)}>
+                        Sports
+                      </Dropdown.Item>
+                      <Dropdown.Item onClick={() => handleCategory(3)}>
+                        Business
+                      </Dropdown.Item>
+                      <Dropdown.Item onClick={() => handleCategory(4)}>
+                        Technology
+                      </Dropdown.Item>
+                      <Dropdown.Item onClick={() => handleCategory(2)}>
+                        Entertainment
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Nav>
+                <Form className="d-flex" onSubmit={handleSearch}>
+                  <FormControl
+                    type="text"
+                    placeholder="Search"
+                    className="me-2"
+                    name="search"
+                  />
+                  <Button variant="outline-secondary" type="submit">
+                    Search
+                  </Button>
+                </Form>
+              </>
             )}
           </Navbar.Collapse>
         </Container>

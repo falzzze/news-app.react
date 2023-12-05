@@ -1,7 +1,7 @@
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 import { Card, Container, Col, Row } from "react-bootstrap";
 import { AppContext } from "../App";
-import { Link } from "react-router-dom";
 
 const NewsList = () => {
   const { news, loading } = useContext(AppContext);
@@ -9,19 +9,18 @@ const NewsList = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
-
   return (
     <Container>
       <Row>
         {news?.map((item) => (
           <Col
-            as={Link}
-            to={`/news/${item.id}`}
             xs={12}
             md={6}
             lg={4}
             key={item.id}
             className="py-3 text-decoration-none"
+            as={Link}
+            to={`/news/${item.id}`}
           >
             <Card className="bg-dark text-light" style={{ height: "100%" }}>
               <Card.Img
@@ -33,7 +32,7 @@ const NewsList = () => {
                 <Card.Title>{item.title}</Card.Title>
                 <Card.Text>{item.description?.slice(0, 70) + "..."}</Card.Text>
                 <Card.Link as={Link} to={item.url}>
-                  More
+                  Read More
                 </Card.Link>
               </Card.Body>
             </Card>
