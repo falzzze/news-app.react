@@ -1,3 +1,5 @@
+# https://falzzze.github.io/news-app.react/
+
 #### GET /tasks - получаем список новостей
 
 #### GET /tasks/{taskId} - получаем отдельную новость
